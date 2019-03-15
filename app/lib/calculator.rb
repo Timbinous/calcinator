@@ -3,7 +3,9 @@ class Calculator
     def calculate(calculation_string)
       calculation_string.gsub!(/\s+/, '')
       loop_calculation_string(/([\d]+\*[\d]+)/, '*', calculation_string)
-      loop_calculation_string(/([\d]+\*[\d]+)/, '/', calculation_string)
+      loop_calculation_string(/([\d]+\/[\d]+)/, '/', calculation_string)
+      loop_calculation_string(/([\d]+\+[\d]+)/, '+', calculation_string)
+      loop_calculation_string(/([\d]+\-[\d]+)/, '-', calculation_string)
     end
 
     def loop_calculation_string(regex, operator, calculation_string)
