@@ -1,0 +1,8 @@
+%h1 Calculator
+= form_tag dashboard_calculate_path, remote: true do
+  = label_tag :calculating_string
+  = text_field_tag :calculating_string
+
+  #result
+  = submit_tag "Calculate"
+
