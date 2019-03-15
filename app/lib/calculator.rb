@@ -1,38 +1,23 @@
 class Calculator
   class << self
-    def calculate(calculating_string)
-      calculating_string.gsub!(/\s+/, '')
-      multiply calculating_string
-      divide calculating_string
+    def calculate(calculation_string)
+      calculation_string.gsub!(/\s+/, '')
+      loop_calculation_string(/([\d]+\*[\d]+)/, '*', calculation_string)
+      loop_calculation_string(/([\d]+\*[\d]+)/, '/', calculation_string)
     end
 
-    def multiply(calculating_string)
-      regex = /([\d]+\*[\d]+)/
-      loop do
-        break if calculating_string.exclude?('*')
-        calc = calculate_multiply(calculating_string.match(regex))
-        calculating_string.sub!(regex, calc)
-      end
-      calculating_string
+    def loop_calculation_string(regex, operator, calculation_string)
+    loop do
+      break if calculation_string.exclude?(operator)
+      calc = calculate_operator(operator, calculation_string.match(regex))
+      calculation_string.sub!(regex, calc)
     end
+    calculation_string
+  end
 
-    def calculate_multiply(match)
-      match.to_s.split('*').map(&:to_i).inject(:*).to_s
-    end
-
-    def divide(calculating_string)
-      regex = /([\d]+\/[\d]+)/
-      loop do
-        break if calculating_string.exclude?('/')
-        calc = calculate_divide(calculating_string.match(regex))
-        calculating_string.sub!(regex, calc)
-      end
-      calculating_string
-    end
-
-    def calculate_divide(match)
-      match.to_s.split('/').map(&:to_i).inject(:/).to_s
-    end
+  def calculate_operator(operator, match)
+    match.to_s.split(operator).map(&:to_i).inject(&operator.to_sym).to_s
+  end
   end
 end
 
